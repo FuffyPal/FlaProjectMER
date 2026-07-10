@@ -56,6 +56,6 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         body: ${{ steps.changelog.outputs.notes }}
-        files: bin/Release/net48/ProjectMER.dll
+        files: bin/Release/net4.8/ProjectMER.dll
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
