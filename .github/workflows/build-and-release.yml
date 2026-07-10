@@ -20,7 +20,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x' # Fits LangVersion 12 and target framework net48 builds on linux
+        dotnet-version: '8.0.x'
 
     - name: Restore dependencies
       run: dotnet restore ProjectMER.csproj
@@ -31,16 +31,13 @@ jobs:
     - name: Get Changelog Entry
       id: changelog
       run: |
-        # Get the tag name (e.g., v1.0.0)
         TAG_NAME=${{ github.ref_name }}
-        # Remove the 'v' prefix to match version in CHANGELOG (e.g., 1.0.0)
         VERSION=${TAG_NAME#v}
         
         echo "Extracting changelog for version $VERSION..."
         
         if [ -f CHANGELOG.md ]; then
           # Extract lines between the matching version header and the next header
-          # Matches markdown headers like "## [1.0.0]" or "## 1.0.0"
           CHANGELOG_CONTENT=$(sed -n "/^## \[\{0,1\}$VERSION\]\{0,1\}/,/^## /p" CHANGELOG.md | sed '1d;$d')
         else
           CHANGELOG_CONTENT="Automated release for $TAG_NAME"
