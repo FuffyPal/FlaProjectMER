@@ -190,7 +190,7 @@ public class SchematicBlockData
 					if (ProjectMER.Singleton.Config.debug)
 					{
 						Player? player = Player.Get(hub.gameObject);
-						Logger.Debug($"Player {(player != null ? player.Nickname : "Unknown")} interacted with Interactable block '{Name}' (ID: {ObjectId}).");
+						Logger.Info($"[DEBUG] Player {(player != null ? player.Nickname : "Unknown")} interacted with Interactable block '{Name}' (ID: {ObjectId}).");
 					}
 
 					if (schematicObject.ObjectFromId.TryGetValue(targetId, out Transform targetTransform))
@@ -211,19 +211,19 @@ public class SchematicBlockData
 
 							if (ProjectMER.Singleton.Config.debug)
 							{
-								Logger.Debug($"Playing animation state '{stateToPlay}' on Animator '{animator.name}' (Target GameObject: '{targetTransform.name}', ID: {targetId}).");
+								Logger.Info($"[DEBUG] Playing animation state '{stateToPlay}' on Animator '{animator.name}' (Target: '{targetTransform.name}', ID: {targetId}).");
 							}
 
 							animator.Play(stateToPlay);
 						}
 						else if (ProjectMER.Singleton.Config.debug)
 						{
-							Logger.Debug($"Animator component not found on target object '{targetTransform.name}' (ID: {targetId}) or its parents/children.");
+							Logger.Info($"[DEBUG] Animator NOT found on target '{targetTransform.name}' (ID: {targetId}) or its parents/children.");
 						}
 					}
 					else if (ProjectMER.Singleton.Config.debug)
 					{
-						Logger.Debug($"Target object ID {targetId} not found in the schematic.");
+						Logger.Info($"[DEBUG] Target object ID {targetId} NOT found in schematic's ObjectFromId dictionary.");
 					}
 				};
 
