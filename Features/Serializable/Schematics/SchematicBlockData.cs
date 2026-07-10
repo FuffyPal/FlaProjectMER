@@ -146,6 +146,22 @@ public class SchematicBlockData
 			return new("Empty Pickup");
 
 		Pickup pickup = Pickup.Create((ItemType)Convert.ToInt32(Properties["ItemType"]), Vector3.zero)!;
+
+		if (pickup is FirearmPickup firearmPickup && Properties.TryGetValue("AttachmentsCode", out object attachmentsCodeObj))
+		{
+			string codeStr = Convert.ToString(attachmentsCodeObj);
+			if (uint.TryParse(codeStr, out uint code) && code != uint.MaxValue)
+			{
+				firearmPickup.AttachmentCode = code;
+			}
+		}
+
+		int uses = Properties.TryGetValue("Uses", out object usesObj) ? Convert.ToInt32(usesObj) : 1;
+		if (uses != 1)
+		{
+			PickupEventsHandler.PickupUsesLeft[pickup.Serial] = uses;
+		}
+
 		if (Properties.ContainsKey("Locked"))
 			PickupEventsHandler.ButtonPickups.Add(pickup.Serial, schematicObject);
 
