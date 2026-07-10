@@ -187,6 +187,12 @@ public class SchematicBlockData
 				bool isToggled = false;
 				Action<ReferenceHub> action = (ReferenceHub hub) =>
 				{
+					if (ProjectMER.Singleton.Config.Debug)
+					{
+						Player? player = Player.Get(hub.gameObject);
+						Logger.Debug($"Player {(player != null ? player.Nickname : "Unknown")} interacted with Interactable block '{Name}' (ID: {ObjectId}).");
+					}
+
 					if (schematicObject.ObjectFromId.TryGetValue(targetId, out Transform targetTransform))
 					{
 						Animator animator = targetTransform.gameObject.GetComponent<Animator>() ?? 
@@ -195,17 +201,29 @@ public class SchematicBlockData
 
 						if (animator != null)
 						{
+							string stateToPlay = stateName;
 							if (Properties.TryGetValue("AnimationStateName2", out object stateName2Obj) && !string.IsNullOrEmpty(Convert.ToString(stateName2Obj)))
 							{
 								string stateName2 = Convert.ToString(stateName2Obj);
-								animator.Play(isToggled ? stateName : stateName2);
+								stateToPlay = isToggled ? stateName : stateName2;
 								isToggled = !isToggled;
 							}
-							else
+
+							if (ProjectMER.Singleton.Config.Debug)
 							{
-								animator.Play(stateName);
+								Logger.Debug($"Playing animation state '{stateToPlay}' on Animator '{animator.name}' (Target GameObject: '{targetTransform.name}', ID: {targetId}).");
 							}
+
+							animator.Play(stateToPlay);
 						}
+						else if (ProjectMER.Singleton.Config.Debug)
+						{
+							Logger.Debug($"Animator component not found on target object '{targetTransform.name}' (ID: {targetId}) or its parents/children.");
+						}
+					}
+					else if (ProjectMER.Singleton.Config.Debug)
+					{
+						Logger.Debug($"Target object ID {targetId} not found in the schematic.");
 					}
 				};
 
