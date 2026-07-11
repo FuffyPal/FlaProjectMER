@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <SL_REFERENCES Condition="'$(SL_REFERENCES)' == ''">$(MSBuildThisFileDirectory)References</SL_REFERENCES>
-    <AssemblyName>FlaProjectMER</AssemblyName>
+    <AssemblyName>ProjectMER</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>

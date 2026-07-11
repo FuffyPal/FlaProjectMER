@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.6]
+- **Compatibility:** Restored AssemblyName to `ProjectMER` (from `FlaProjectMER`) to resolve loading issues with dependent plugins such as `MEROptimizer`.
+
 ## [0.2.5]
 - **Pickup:** Added support for weapon attachments code serialization and deserialization.
 - **Pickup:** Added support for Number of Uses (Uses property) to allow finite or infinite item spawns.
